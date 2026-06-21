@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: platemind
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /data
+    disk:
+      name: platemind-data
+      mountPath: /data
+      sizeGB: 1

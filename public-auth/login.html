@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign in — PlateMind</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%23FF8C69%22/><path d=%22M28 55c0-14 10-25 22-25s22 11 22 25-10 30-22 30-22-16-22-30z%22 fill=%22%23FFF6F0%22/></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFF8F2; --peach:#FFB997; --coral:#FF8C69; --coral-deep:#F26B47;
+    --ink:#2B2320; --muted:#8A7A72; --line:rgba(43,35,32,0.10);
+    --shadow:0 20px 50px -20px rgba(242,107,71,0.35);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+    background: radial-gradient(120% 120% at 100% 0%, var(--peach) 0%, var(--cream) 45%, var(--cream) 100%);
+    font-family:"Plus Jakarta Sans", system-ui, sans-serif; color:var(--ink); padding:24px;
+  }
+  .card{
+    width:100%; max-width:400px; background:#fff; border-radius:22px; padding:36px 32px;
+    box-shadow:var(--shadow); border:1px solid var(--line);
+  }
+  .brand{display:flex; align-items:center; gap:10px; margin-bottom:22px;}
+  .brand span{font-family:"Fraunces", serif; font-weight:600; font-size:1.3rem;}
+  h1{font-family:"Fraunces", serif; font-size:1.5rem; margin:0 0 6px;}
+  p.sub{color:var(--muted); margin:0 0 24px; font-size:.92rem;}
+  label{display:block; font-size:.82rem; font-weight:600; margin:14px 0 6px; color:var(--ink);}
+  input{
+    width:100%; padding:12px 14px; border-radius:12px; border:1.5px solid var(--line);
+    font-size:.95rem; font-family:inherit; background:var(--cream);
+  }
+  input:focus{outline:none; border-color:var(--coral); box-shadow:0 0 0 4px rgba(255,140,105,0.14);}
+  button.primary{
+    width:100%; margin-top:22px; padding:13px; border:none; border-radius:14px;
+    background:linear-gradient(135deg, var(--coral), var(--coral-deep)); color:#fff;
+    font-weight:700; font-size:.95rem; cursor:pointer; font-family:inherit;
+  }
+  button.primary:disabled{opacity:.6; cursor:not-allowed;}
+  button.primary:hover:not(:disabled){filter:brightness(1.04);}
+  .toggle{
+    margin-top:18px; text-align:center; font-size:.88rem; color:var(--muted);
+  }
+  .toggle button{
+    background:none; border:none; color:var(--coral-deep); font-weight:700; cursor:pointer;
+    font-size:.88rem; font-family:inherit; padding:0;
+  }
+  .error{
+    margin-top:14px; padding:10px 12px; border-radius:10px; font-size:.85rem;
+    background:rgba(242,107,71,0.10); color:var(--coral-deep); display:none;
+  }
+  .hint{font-size:.78rem; color:var(--muted); margin-top:6px;}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="brand">
+    <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+      <circle cx="50" cy="50" r="48" fill="var(--coral)"/>
+      <path d="M28 55c0-14 10-25 22-25s22 11 22 25-10 30-22 30-22-16-22-30z" fill="var(--cream)"/>
+      <path d="M50 30c4 0 7 4 7 9s-3 8-7 8-7-3-7-8 3-9 7-9z" fill="var(--coral)"/>
+    </svg>
+    <span>PlateMind</span>
+  </div>
+
+  <h1 id="formTitle">Welcome back</h1>
+  <p class="sub" id="formSub">Sign in to get to your kitchen.</p>
+
+  <form id="authForm">
+    <label for="username">Username</label>
+    <input id="username" name="username" autocomplete="username" required />
+
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" autocomplete="current-password" required />
+    <div class="hint" id="pwHint" style="display:none;">At least 8 characters.</div>
+
+    <button class="primary" id="submitBtn" type="submit">Sign in</button>
+    <div class="error" id="errorBox"></div>
+  </form>
+
+  <div class="toggle">
+    <span id="toggleText">New here?</span>
+    <button id="toggleBtn" type="button">Create an account</button>
+  </div>
+</div>
+
+<script>
+  let mode = "login"; // or "register"
+  const form = document.getElementById("authForm");
+  const title = document.getElementById("formTitle");
+  const sub = document.getElementById("formSub");
+  const submitBtn = document.getElementById("submitBtn");
+  const toggleText = document.getElementById("toggleText");
+  const toggleBtn = document.getElementById("toggleBtn");
+  const errorBox = document.getElementById("errorBox");
+  const pwHint = document.getElementById("pwHint");
+  const passwordInput = document.getElementById("password");
+
+  function setMode(next){
+    mode = next;
+    errorBox.style.display = "none";
+    if (mode === "login"){
+      title.textContent = "Welcome back";
+      sub.textContent = "Sign in to get to your kitchen.";
+      submitBtn.textContent = "Sign in";
+      toggleText.textContent = "New here?";
+      toggleBtn.textContent = "Create an account";
+      pwHint.style.display = "none";
+      passwordInput.autocomplete = "current-password";
+    } else {
+      title.textContent = "Create your account";
+      sub.textContent = "It takes a few seconds.";
+      submitBtn.textContent = "Create account";
+      toggleText.textContent = "Already have an account?";
+      toggleBtn.textContent = "Sign in";
+      pwHint.style.display = "block";
+      passwordInput.autocomplete = "new-password";
+    }
+  }
+  toggleBtn.addEventListener("click", () => setMode(mode === "login" ? "register" : "login"));
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    errorBox.style.display = "none";
+    submitBtn.disabled = true;
+    const username = document.getElementById("username").value.trim();
+    const password = passwordInput.value;
+    try {
+      const resp = await fetch(mode === "login" ? "/api/login" : "/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await resp.json();
+      if (!resp.ok) {
+        errorBox.textContent = data.error || "Something went wrong.";
+        errorBox.style.display = "block";
+        submitBtn.disabled = false;
+        return;
+      }
+      window.location.href = "/";
+    } catch (err) {
+      errorBox.textContent = "Could not reach the server. Try again.";
+      errorBox.style.display = "block";
+      submitBtn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>

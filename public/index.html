@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PlateMind — Your Kitchen, Understood</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%23FF8C69%22/><path d=%22M28 55c0-14 10-25 22-25s22 11 22 25-10 30-22 30-22-16-22-30z%22 fill=%22%23FFF6F0%22/></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ===================== SIDEBAR RAIL ===================== -->
+  <aside class="rail">
+    <div class="rail-brand">
+      <svg class="brand-mark" viewBox="0 0 100 100" width="38" height="38" aria-hidden="true">
+        <circle cx="50" cy="50" r="48" fill="var(--coral)"/>
+        <path d="M28 55c0-14 10-25 22-25s22 11 22 25-10 30-22 30-22-16-22-30z" fill="var(--cream)"/>
+        <path d="M50 30c4 0 7 4 7 9s-3 8-7 8-7-3-7-8 3-9 7-9z" fill="var(--coral)"/>
+      </svg>
+      <span class="rail-name">PlateMind</span>
+    </div>
+
+    <nav class="rail-nav" aria-label="Primary">
+      <button class="rail-link active" data-page="dashboard" title="Dashboard">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 13h6V4H4v9zm0 7h6v-5H4v5zm10 0h6V11h-6v9zm0-16v5h6V4h-6z" fill="currentColor"/></svg>
+        <span>Dashboard</span>
+      </button>
+      <button class="rail-link" data-page="pantry" title="Pantry">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 7h16l-1.5 13.5a1 1 0 0 1-1 .9H6.5a1 1 0 0 1-1-.9L4 7Zm2.5-3.5h11L19 6H5l1.5-2.5Z" fill="currentColor"/></svg>
+        <span>My Pantry</span>
+      </button>
+      <button class="rail-link" data-page="recipes" title="Recipes">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 2C8 2 6 6 6 10c0 3 1.5 5 3 6.2V21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-4.8c1.5-1.2 3-3.2 3-6.2 0-4-2-8-6-8Z" fill="currentColor"/></svg>
+        <span>Recipes</span>
+      </button>
+      <button class="rail-link" data-page="planner" title="Meal Planner">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M5 4h2V2h2v2h6V2h2v2h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm-1 6v10a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V10H4Z" fill="currentColor"/></svg>
+        <span>Planner</span>
+      </button>
+      <button class="rail-link" data-page="grocery" title="Grocery List">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M7 18a2 2 0 1 0 2 2 2 2 0 0 0-2-2Zm10 0a2 2 0 1 0 2 2 2 2 0 0 0-2-2ZM7.2 14h9.6a1 1 0 0 0 .96-.73L20 6H6.2l-.4-2H2v2h2l3.2 12.9A1 1 0 0 0 8.4 19h9.2v-2H8.4l-.2-1Z" fill="currentColor"/></svg>
+        <span>Grocery List</span>
+      </button>
+      <button class="rail-link" data-page="profile" title="Preferences">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4 0-8 2-8 5v3h16v-3c0-3-4-5-8-5Z" fill="currentColor"/></svg>
+        <span>Preferences</span>
+      </button>
+    </nav>
+
+    <div class="rail-foot">
+      <div class="streak-pill" title="Cooking streak">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 2c1 4-3 5-3 9a3 3 0 0 0 6 0c0-1-.5-2-1-3 2 1 4 4 4 7a6 6 0 0 1-12 0c0-6 4-9 6-13Z" fill="var(--coral)"/></svg>
+        <span><strong>6</strong>-day streak</span>
+      </div>
+      <button id="logoutBtn" type="button" class="logout-btn" title="Sign out">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M16 17v-2H9v-2h7V9l5 4-5 4zM14 4v2h-7v12h7v2H5V4h9z" fill="currentColor"/></svg>
+        <span id="logoutUsername">Sign out</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ===================== MOBILE TOP BAR ===================== -->
+  <header class="mobile-bar">
+    <div class="rail-brand">
+      <svg class="brand-mark" viewBox="0 0 100 100" width="30" height="30" aria-hidden="true">
+        <circle cx="50" cy="50" r="48" fill="var(--coral)"/>
+        <path d="M28 55c0-14 10-25 22-25s22 11 22 25-10 30-22 30-22-16-22-30z" fill="var(--cream)"/>
+      </svg>
+      <span class="rail-name">PlateMind</span>
+    </div>
+    <button id="mobileMenuBtn" class="icon-btn" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" width="22" height="22"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </header>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile primary">
+    <button class="rail-link active" data-page="dashboard">Dashboard</button>
+    <button class="rail-link" data-page="pantry">My Pantry</button>
+    <button class="rail-link" data-page="recipes">Recipes</button>
+    <button class="rail-link" data-page="planner">Planner</button>
+    <button class="rail-link" data-page="grocery">Grocery List</button>
+    <button class="rail-link" data-page="profile">Preferences</button>
+  </nav>
+
+  <!-- ===================== MAIN ===================== -->
+  <main class="main">
+
+    <!-- ---------- PAGE: DASHBOARD ---------- -->
+    <section class="page" id="page-dashboard">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">Good to see you</p>
+          <h1>What's in the kitchen today?</h1>
+        </div>
+        <button class="btn btn-primary" data-goto="pantry">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          Add ingredients
+        </button>
+      </div>
+
+      <div class="bento">
+        <div class="card bento-wide hero-card">
+          <div class="hero-card-text">
+            <p class="eyebrow eyebrow-light">Today's pick</p>
+            <h2 id="heroRecipeName">Loading a recipe for you…</h2>
+            <p class="hero-sub" id="heroRecipeSub"></p>
+            <div class="hero-tags" id="heroTags"></div>
+            <button class="btn btn-light" id="heroCookBtn">Cook this</button>
+          </div>
+          <div class="scoop-visual" id="heroScoop"></div>
+        </div>
+
+        <div class="card stat-card">
+          <span class="stat-label">Pantry items</span>
+          <span class="stat-value" id="statPantryCount">0</span>
+          <span class="stat-foot">ready to cook with</span>
+        </div>
+        <div class="card stat-card">
+          <span class="stat-label">Recipes matched</span>
+          <span class="stat-value" id="statRecipeCount">0</span>
+          <span class="stat-foot">based on what you have</span>
+        </div>
+        <div class="card stat-card">
+          <span class="stat-label">Avg. calories / meal</span>
+          <span class="stat-value" id="statAvgCal">0</span>
+          <span class="stat-foot">across this week's plan</span>
+        </div>
+
+        <div class="card bento-wide">
+          <div class="card-head-row">
+            <h3>Use it before it wilts</h3>
+            <span class="tag tag-soft">Leftover rescue</span>
+          </div>
+          <p class="card-sub">Ingredients sitting closest to their use-by window — matched to recipes that finish them off.</p>
+          <div id="leftoverList" class="leftover-list"></div>
+        </div>
+
+        <div class="card bento-narrow">
+          <h3>This week's plan</h3>
+          <div id="miniPlanner" class="mini-planner"></div>
+          <button class="btn btn-ghost btn-block" data-goto="planner">Open full planner</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- PAGE: PANTRY ---------- -->
+    <section class="page hidden" id="page-pantry">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">Stocked &amp; tracked</p>
+          <h1>My Pantry</h1>
+        </div>
+      </div>
+
+      <div class="card pantry-add">
+        <form id="pantryForm" class="pantry-form">
+          <input type="text" id="pantryInput" placeholder="Type an ingredient — e.g. spinach, chickpeas, paneer…" autocomplete="off" />
+          <select id="pantryQty">
+            <option value="a little">a little</option>
+            <option value="some" selected>some</option>
+            <option value="plenty">plenty</option>
+          </select>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+        <div class="quick-add">
+          <span class="quick-add-label">Quick add:</span>
+          <div id="quickAddChips" class="chip-row"></div>
+        </div>
+      </div>
+
+      <div class="pantry-grid" id="pantryGrid"></div>
+
+      <div class="card empty-state" id="pantryEmpty" style="display:none;">
+        <svg viewBox="0 0 24 24" width="36" height="36"><path d="M4 7h16l-1.5 13.5a1 1 0 0 1-1 .9H6.5a1 1 0 0 1-1-.9L4 7Zm2.5-3.5h11L19 6H5l1.5-2.5Z" fill="currentColor"/></svg>
+        <p>Your pantry is empty. Add a few ingredients to get matched with recipes.</p>
+      </div>
+    </section>
+
+    <!-- ---------- PAGE: RECIPES ---------- -->
+    <section class="page hidden" id="page-recipes">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">Matched for you</p>
+          <h1>Recipes</h1>
+        </div>
+      </div>
+
+      <div class="card filter-bar">
+        <div class="filter-group">
+          <label>Diet</label>
+          <select id="filterDiet">
+            <option value="all">All diets</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="vegan">Vegan</option>
+            <option value="high-protein">High-protein</option>
+            <option value="diabetic-friendly">Diabetic-friendly</option>
+            <option value="low-carb">Low-carb</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Max time</label>
+          <select id="filterTime">
+            <option value="999">Any time</option>
+            <option value="15">Under 15 min</option>
+            <option value="30">Under 30 min</option>
+            <option value="45">Under 45 min</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Difficulty</label>
+          <select id="filterDifficulty">
+            <option value="all">Any level</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+        <div class="filter-group filter-toggle">
+          <label class="switch-label">
+            <input type="checkbox" id="filterPantryOnly" />
+            <span class="switch"></span>
+            Only what I can make now
+          </label>
+        </div>
+      </div>
+
+      <div class="recipe-grid" id="recipeGrid"></div>
+    </section>
+
+    <!-- ---------- PAGE: RECIPE DETAIL ---------- -->
+    <section class="page hidden" id="page-recipe-detail">
+      <button class="back-link" data-goto="recipes">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to recipes
+      </button>
+
+      <div class="recipe-detail-head card">
+        <div class="scoop-visual scoop-lg" id="detailScoop"></div>
+        <div class="recipe-detail-info">
+          <div class="hero-tags" id="detailTags"></div>
+          <h1 id="detailName">Recipe name</h1>
+          <p class="card-sub" id="detailDesc"></p>
+          <div class="detail-meta-row">
+            <div class="meta-pill"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M12 7v5l4 2" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg><span id="detailTime"></span></div>
+            <div class="meta-pill"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 2 2 7l10 5 10-5-10-5Zm0 10v10" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg><span id="detailDifficulty"></span></div>
+            <div class="meta-pill"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 21s-7-4.5-7-10a4.8 4.8 0 0 1 8.4-3.2A4.8 4.8 0 0 1 19 11c0 5.5-7 10-7 10Z" fill="currentColor"/></svg><span id="detailServes"></span></div>
+          </div>
+          <div class="detail-actions">
+            <button class="btn btn-primary" id="addToPlanBtn">Add to meal planner</button>
+            <button class="btn btn-ghost" id="addMissingToGroceryBtn">Add missing items to grocery list</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bento detail-bento">
+        <div class="card">
+          <h3>Ingredients</h3>
+          <ul class="ingredient-list" id="detailIngredients"></ul>
+        </div>
+        <div class="card">
+          <h3>Method</h3>
+          <ol class="steps-list" id="detailSteps"></ol>
+        </div>
+        <div class="card">
+          <h3>Nutrition <span class="muted-small">per serving</span></h3>
+          <div class="nutri-grid" id="detailNutrition"></div>
+        </div>
+        <div class="card">
+          <h3>Smart swaps</h3>
+          <p class="card-sub">Don't have something? Here's what works instead.</p>
+          <div id="detailSubs" class="subs-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- PAGE: PLANNER ---------- -->
+    <section class="page hidden" id="page-planner">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">Plan ahead</p>
+          <h1>Weekly Meal Planner</h1>
+        </div>
+        <button class="btn btn-ghost" id="clearPlanBtn">Clear week</button>
+      </div>
+
+      <div class="planner-board" id="plannerBoard"></div>
+    </section>
+
+    <!-- ---------- PAGE: GROCERY ---------- -->
+    <section class="page hidden" id="page-grocery">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">Shop smart</p>
+          <h1>Grocery List</h1>
+        </div>
+        <button class="btn btn-ghost" id="clearGroceryBtn">Clear list</button>
+      </div>
+
+      <div class="card pantry-add">
+        <form id="groceryForm" class="pantry-form">
+          <input type="text" id="groceryInput" placeholder="Add an item manually…" autocomplete="off" />
+          <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+      </div>
+
+      <div class="bento grocery-bento">
+        <div class="card" id="groceryCard">
+          <h3>To buy</h3>
+          <div id="groceryList" class="grocery-list"></div>
+          <div class="empty-state empty-inline" id="groceryEmpty">
+            <p>Nothing here yet — add ingredients from a recipe or type your own above.</p>
+          </div>
+        </div>
+        <div class="card bento-narrow">
+          <h3>Bought already</h3>
+          <div id="groceryDoneList" class="grocery-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- PAGE: PROFILE / PREFERENCES ---------- -->
+    <section class="page hidden" id="page-profile">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">Tuned to you</p>
+          <h1>Preferences</h1>
+        </div>
+      </div>
+
+      <div class="bento">
+        <div class="card bento-wide">
+          <h3>Dietary preference</h3>
+          <p class="card-sub">This shapes every recommendation across PlateMind.</p>
+          <div class="diet-chip-row" id="dietChipRow"></div>
+        </div>
+
+        <div class="card bento-wide">
+          <h3>Goals</h3>
+          <div class="goal-grid">
+            <label class="goal-field">
+              <span>Daily calorie target</span>
+              <input type="number" id="goalCalories" value="2000" min="1000" max="5000" step="50" />
+            </label>
+            <label class="goal-field">
+              <span>Daily protein target (g)</span>
+              <input type="number" id="goalProtein" value="90" min="20" max="300" step="5" />
+            </label>
+            <label class="goal-field">
+              <span>Household size</span>
+              <input type="number" id="goalServings" value="2" min="1" max="10" step="1" />
+            </label>
+          </div>
+          <button class="btn btn-primary" id="savePrefsBtn">Save preferences</button>
+          <span class="save-confirm" id="saveConfirm">Saved</span>
+        </div>
+
+        <div class="card bento-wide">
+          <h3>Allergens &amp; exclusions</h3>
+          <p class="card-sub">We'll filter these out of every recommendation.</p>
+          <div class="diet-chip-row" id="allergenChipRow"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
